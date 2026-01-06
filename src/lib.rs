@@ -175,6 +175,9 @@ impl<'a> Iterator for RadiotapIteratorIntoIter<'a> {
                         "radiotap parse: kind {:?}, start: {}, end: {}",
                         kind, start, end
                     );
+                    if end > 40000{
+                        println!("data: {:?}", self.cursor.get_ref());
+                    }
                     let data = &self.cursor.get_ref()[start..end];
                     self.cursor.set_position(end as u64);
                     Some(Ok((kind, data)))
