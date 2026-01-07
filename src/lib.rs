@@ -175,8 +175,9 @@ impl<'a> Iterator for RadiotapIteratorIntoIter<'a> {
                         "radiotap parse: kind {:?}, start: {}, end: {}",
                         kind, start, end
                     );
-                    if end > 40000{
-                        println!("data: {:?}", self.cursor.get_ref());
+                    if end > self.cursor.get_ref().len() {
+                        log::warn!("data: {:?}", self.cursor.get_ref());
+                        return Some(Err(Error::InvalidFormat));
                     }
                     let data = &self.cursor.get_ref()[start..end];
                     self.cursor.set_position(end as u64);
